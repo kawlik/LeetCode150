@@ -1,0 +1,9 @@
+{
+	"tasks": {
+		"lint": "deno fmt --indent-width=4 --line-width=96 --use-tabs",
+		"test": "deno test"
+	},
+	"imports": {
+		"@std/assert": "jsr:@std/assert@1"
+	}
+}
