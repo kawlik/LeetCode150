@@ -33,5 +33,3 @@ Deno.test("Case 3", () => {
 Deno.test("Case 4", () => {
 	assertEquals(canJump([0]), true);
 });
-
-canJump([2, 3, 1, 1, 4]);
