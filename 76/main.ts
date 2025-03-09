@@ -17,42 +17,37 @@ function minWindow(s: string, t: string): string {
 	let p = 0;
 	let q = 0;
 
-	let minStr = "";
+	let charsLeft = t.length;
+	let minString = "";
 
 	while (q < s.length) {
-		p = q;
-
-		const charsLeft = { ...charCount };
-		let numCharsLeft = t.length;
-
-		while (q < s.length && numCharsLeft > 0) {
-			if (Object.hasOwn(charsLeft, s[q])) {
-				if (--charsLeft[s[q]] >= 0) numCharsLeft--;
+		while (q < s.length && charsLeft > 0) {
+			if (Object.hasOwn(charCount, s[q])) {
+				if (--charCount[s[q]] >= 0) charsLeft--;
 			}
 
 			q++;
 		}
 
-		if (numCharsLeft > 0) break;
+		if (charsLeft > 0) break;
 
 		while (p < s.length) {
-			if (Object.hasOwn(charsLeft, s[p])) {
-				if (++charsLeft[s[p]] >= 1) break;
+			if (Object.hasOwn(charCount, s[p])) {
+				if (++charCount[s[p]] >= 1) break;
 			}
 
 			p++;
 		}
 
-		if (minStr.length > q - p || minStr.length === 0) {
-			minStr = s.substring(p, q);
+		if (minString.length > q - p || minString.length === 0) {
+			minString = s.substring(p, q);
 		}
 
-		while (!Object.hasOwn(charsLeft, s[p++]));
-
-		q = p;
+		charsLeft++;
+		p++;
 	}
 
-	return minStr;
+	return minString;
 }
 
 /*   *   *   *   *   *   *   *   *   *   */
@@ -72,4 +67,12 @@ Deno.test("Case 3", () => {
 
 Deno.test("Case 4", () => {
 	assertEquals(minWindow("bdab", "ab"), "ab");
+});
+
+Deno.test("Case 5", () => {
+	assertEquals(minWindow("cabeca", "cae"), "eca");
+});
+
+Deno.test("Case 6", () => {
+	assertEquals(minWindow("caaec", "cae"), "aec");
 });
