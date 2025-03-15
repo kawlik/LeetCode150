@@ -7,27 +7,51 @@ function setZeroes(matrix: number[][]): void {
 	const M = matrix.length;
 	const N = matrix[0].length;
 
-	const zeroRows = new Set<number>();
-	const zeroCols = new Set<number>();
+	let hasZeroFirstRow = false;
+	let hasZeroFirstCol = false;
 
-	for (let row = 0; row < M; row++) {
-		for (let col = 0; col < N; col++) {
-			if (matrix[row][col] === 0) {
-				zeroRows.add(row);
-				zeroCols.add(col);
+	for (let m = 0; m < M; m++) {
+		if (matrix[m][0] === 0) hasZeroFirstCol = true;
+	}
+
+	for (let n = 0; n < N; n++) {
+		if (matrix[0][n] === 0) hasZeroFirstRow = true;
+	}
+
+	for (let m = 1; m < M; m++) {
+		for (let n = 1; n < N; n++) {
+			if (matrix[m][n] === 0) {
+				matrix[m][0] = 0;
+				matrix[0][n] = 0;
 			}
 		}
 	}
 
-	for (const row of zeroRows) {
-		for (let col = 0; col < N; col++) {
-			matrix[row][col] = 0;
+	for (let m = 1; m < M; m++) {
+		if (matrix[m][0] === 0) {
+			for (let n = 0; n < N; n++) {
+				matrix[m][n] = 0;
+			}
 		}
 	}
 
-	for (const col of zeroCols) {
-		for (let row = 0; row < M; row++) {
-			matrix[row][col] = 0;
+	for (let n = 1; n < N; n++) {
+		if (matrix[0][n] === 0) {
+			for (let m = 0; m < M; m++) {
+				matrix[m][n] = 0;
+			}
+		}
+	}
+
+	if (hasZeroFirstCol) {
+		for (let m = 0; m < M; m++) {
+			matrix[m][0] = 0;
+		}
+	}
+
+	if (hasZeroFirstRow) {
+		for (let n = 0; n < N; n++) {
+			matrix[0][n] = 0;
 		}
 	}
 }
