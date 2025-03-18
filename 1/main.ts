@@ -4,27 +4,19 @@ import { assertEquals } from "jsr:@std/assert";
 /*   *   *   *   *   *   *   *   *   *   */
 
 function twoSum(nums: number[], target: number): number[] {
-	const sorted = [...nums].sort((p, q) => p - q);
+	const numsMap = new Map<number, number>();
 
-	let p = 0;
-	let q = nums.length - 1;
+	for (const [index, value] of nums.entries()) {
+		const complement = target - value;
 
-	while (p < q) {
-		const sum = sorted[p] + sorted[q];
-
-		if (sum < target) p++;
-		if (sum > target) q--;
-
-		if (sum === target) break;
+		if (numsMap.has(complement)) {
+			return [numsMap.get(complement)!, index];
+		} else {
+			numsMap.set(value, index);
+		}
 	}
 
-	let i = 0;
-	let j = nums.length - 1;
-
-	while (nums[i] !== sorted[p]) i++;
-	while (nums[j] !== sorted[q]) j--;
-
-	return [i, j];
+	return [];
 }
 
 /*   *   *   *   *   *   *   *   *   *   */
