@@ -1,16 +1,5 @@
 import { assertEquals } from "jsr:@std/assert";
-
-/*   *   *   *   *   *   *   *   *   *   */
-/*   *   *   *   *   *   *   *   *   *   */
-
-class ListNode {
-	val: number;
-	next: ListNode | null;
-	constructor(val?: number, next?: ListNode | null) {
-		this.val = val === undefined ? 0 : val;
-		this.next = next === undefined ? null : next;
-	}
-}
+import { ListNode } from "../types/list-node.ts";
 
 /*   *   *   *   *   *   *   *   *   *   */
 /*   *   *   *   *   *   *   *   *   *   */
