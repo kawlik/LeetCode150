@@ -3,11 +3,15 @@ import { TreeNode } from "../types/tree-node.ts";
 export function fromArray(array: (number | null)[]): TreeNode | null {
 	const nodes = array.map((value) => value === null ? null : new TreeNode(value));
 
-	for (let i = 0; i < nodes.length; i++) {
-		if (nodes[i] === null) continue;
+	let i = 0;
 
-		if (nodes[2 * i + 1]) nodes[i]!.left = nodes[2 * i + 1];
-		if (nodes[2 * i + 2]) nodes[i]!.right = nodes[2 * i + 2];
+	for (const node of nodes) {
+		if (node === null) continue;
+
+		if (i + 1 < nodes.length) node.left = nodes[i + 1];
+		if (i + 2 < nodes.length) node.right = nodes[i + 2];
+
+		if ((i += 2) >= nodes.length) break;
 	}
 
 	return nodes[0] || null;
