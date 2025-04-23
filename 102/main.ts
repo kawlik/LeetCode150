@@ -6,13 +6,10 @@ import { TreeNode } from "../types/tree-node.ts";
 /*   *   *   *   *   *   *   *   *   *   */
 
 function levelOrder(root: TreeNode | null): number[][] {
-	if (!root) return [];
-
-	const queue: [node: TreeNode, depth: number][] = [[root, 0]];
 	const order: number[][] = [];
 
-	while (queue.length) {
-		const [node, depth] = queue.shift()!;
+	const dfs = (node: TreeNode | null, depth = 0): void => {
+		if (!node) return;
 
 		if (order[depth]) {
 			order[depth].push(node.val);
@@ -20,9 +17,11 @@ function levelOrder(root: TreeNode | null): number[][] {
 			order[depth] = [node.val];
 		}
 
-		if (node.left) queue.push([node.left, depth + 1]);
-		if (node.right) queue.push([node.right, depth + 1]);
-	}
+		dfs(node.left, depth + 1);
+		dfs(node.right, depth + 1);
+	};
+
+	dfs(root);
 
 	return order;
 }
