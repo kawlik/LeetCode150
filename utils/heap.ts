@@ -11,7 +11,7 @@ abstract class Heap {
 		return Number(this.heap[0]);
 	}
 
-	pop(): number {
+	poll(): number {
 		const head = this.heap[0];
 		const tail = this.heap.pop()!;
 
@@ -28,8 +28,8 @@ abstract class Heap {
 		this.heapifyUp(this.heap.length - 1);
 	}
 
-	swap(index1: number, index2: number): void {
-		[this.heap[index1], this.heap[index2]] = [this.heap[index2], this.heap[index1]];
+	size(): number {
+		return this.heap.length;
 	}
 
 	// private utils
@@ -83,6 +83,10 @@ abstract class Heap {
 
 		this.swap(index, currentIndex);
 		this.heapifyDown(currentIndex);
+	}
+
+	private swap(index1: number, index2: number): void {
+		[this.heap[index1], this.heap[index2]] = [this.heap[index2], this.heap[index1]];
 	}
 }
 

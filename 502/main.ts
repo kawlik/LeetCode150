@@ -10,7 +10,6 @@ function findMaximizedCapital(
 	profits: number[],
 	capital: number[],
 ): number {
-	const length = capital.length;
 	const queue = new MaxHeap();
 
 	const data = capital
@@ -19,19 +18,16 @@ function findMaximizedCapital(
 
 	let currentCapital = w;
 	let currentIndex = 0;
-	let currentSize = 0;
 
 	while (--k >= 0) {
 		while (currentIndex < data.length && data[currentIndex][0] <= currentCapital) {
 			queue.push(data[currentIndex][1]);
 			currentIndex++;
-			currentSize++;
 		}
 
-		if (currentSize === 0) return currentCapital;
+		if (queue.size() === 0) return currentCapital;
 
-		currentCapital += queue.pop();
-		currentSize--;
+		currentCapital += queue.poll();
 	}
 
 	return currentCapital;

@@ -11,7 +11,7 @@ function findKthLargest(nums: number[], k: number): number {
 
 	for (let i = k; i < nums.length; i++) {
 		if (nums[i] > heap.peak()) {
-			heap.pop();
+			heap.poll();
 			heap.push(nums[i]);
 		}
 	}
