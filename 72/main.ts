@@ -3,31 +3,30 @@ import { assertEquals } from "jsr:@std/assert";
 /*   *   *   *   *   *   *   *   *   *   */
 /*   *   *   *   *   *   *   *   *   *   */
 
-const memo: { [word1: string]: { [word2: string]: number } } = {};
-
 function minDistance(word1: string, word2: string): number {
-	if (word1 === word2) return 0;
-	if (!word1.length) return word2.length;
-	if (!word2.length) return word1.length;
+	const M = word1.length;
+	const N = word2.length;
 
-	const sstr1 = word1.slice(1);
-	const sstr2 = word2.slice(1);
+	const dp = Array.from({ length: M + 1 }, () => new Array<number>(N + 1));
 
-	if (word1[0] === word2[0]) return minDistance(sstr1, sstr2);
+	for (let i = 0; i <= M; i++) dp[i][0] = i;
+	for (let i = 0; i <= N; i++) dp[0][i] = i;
 
-	if (Object.hasOwn(memo, word1)) {
-		if (Object.hasOwn(memo[word1], word2)) return memo[word1][word2];
-	} else {
-		memo[word1] = {};
+	for (let m = 1; m <= M; m++) {
+		for (let n = 1; n <= N; n++) {
+			if (word1[m - 1] === word2[n - 1]) {
+				dp[m][n] = dp[m - 1][n - 1];
+			} else {
+				const op_1 = dp[m - 1][n - 1];
+				const op_2 = dp[m - 1][n];
+				const op_3 = dp[m][n - 1];
+
+				dp[m][n] = 1 + Math.min(op_1, op_2, op_3);
+			}
+		}
 	}
 
-	const op_1 = minDistance(sstr1, word2);
-	const op_2 = minDistance(word1, sstr2);
-	const op_3 = minDistance(sstr1, sstr2);
-
-	memo[word1][word2] = 1 + Math.min(op_1, op_2, op_3);
-
-	return memo[word1][word2];
+	return dp[M][N];
 }
 
 /*   *   *   *   *   *   *   *   *   *   */
